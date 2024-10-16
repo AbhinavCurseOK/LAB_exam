@@ -11,7 +11,7 @@ pipeline {
                 script {
                     echo 'Building Docker Image...'
                     // Build the Docker image using the Dockerfile
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    bat "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                 script {
                     echo 'Running Docker Container...'
                     // Run the Docker container
-                    sh 'docker run $DOCKER_IMAGE'
+                    bat "docker run ${DOCKER_IMAGE}"
                 }
             }
         }
