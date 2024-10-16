@@ -1,2 +1,1 @@
-New file created on new branch.
-Second line added.
+New file created on new branch
