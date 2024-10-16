@@ -1,14 +1,28 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.9'
-        }
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'hellomam'  // Use 'hellomam' as the Docker image name
     }
 
     stages {
-        stage('Run Python Script') {
+        stage('Build Docker Image') {
             steps {
-                sh 'python hello.py'
+                script {
+                    echo 'Building Docker Image...'
+                    // Build the Docker image using the Dockerfile
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    echo 'Running Docker Container...'
+                    // Run the Docker container
+                    sh 'docker run $DOCKER_IMAGE'
+                }
             }
         }
     }
@@ -16,6 +30,12 @@ pipeline {
     post {
         always {
             echo 'Pipeline finished'
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
